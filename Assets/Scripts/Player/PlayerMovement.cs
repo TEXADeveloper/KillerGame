@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField, Range(0, 5)] private float speed;
+    [SerializeField, Range(0, 10)] private float speed;
     [SerializeField, Range(0, 1)] private float moveInertiaMultiplier;
     Vector2 previousVelocity;
-    [SerializeField, Range(0, 360)] private float maxRotationSpeed;
+    [SerializeField, Range(0, 720)] private float maxRotationSpeed;
     [SerializeField, Range(0, 10)] private float rotationInertiaMultiplier;
     float previousAngularVelocity;
     Rigidbody2D rb;
@@ -41,16 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
     void stopMovement()
     {
-        float x = 0, y = 0;
-        if (rb.velocity.x > 0)
-            x = Mathf.Clamp(rb.velocity.x - moveInertiaMultiplier, 0, rb.velocity.x);
-        else if (rb.velocity.x < 0)
-            x = Mathf.Clamp(rb.velocity.x + moveInertiaMultiplier, rb.velocity.x, 0);
-        if (rb.velocity.y > 0)
-            y = Mathf.Clamp(rb.velocity.y - moveInertiaMultiplier, 0, rb.velocity.y);
-        else if (rb.velocity.y < 0)
-            y = Mathf.Clamp(rb.velocity.y + moveInertiaMultiplier, rb.velocity.y, 0);
-        rb.velocity = new Vector2(x, y);
+        Vector2 vel = rb.velocity - (rb.velocity.normalized * moveInertiaMultiplier);
+        if (rb.velocity.x > 0 && vel.x < 0 || rb.velocity.y > 0 && vel.y < 0
+            || rb.velocity.x < 0 && vel.x > 0 || rb.velocity.y < 0 && vel.y > 0)
+            vel = Vector2.zero;
+        rb.velocity = vel;
     }
 
     void rotate()

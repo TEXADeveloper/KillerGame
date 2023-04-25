@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    Transform player;
+    private Transform player;
+    private EnemySpawner eS;
     private Rigidbody2D rb;
     [SerializeField] private float speed;
 
-    public void SetPlayer(Transform playerTransform)
+    public void SetPlayer(Transform playerTransform, EnemySpawner enemySpawner)
     {
         player = playerTransform;
+        eS = enemySpawner;
     }
 
     void Start()
@@ -22,11 +24,16 @@ public class EnemyAI : MonoBehaviour
         rb.velocity = transform.up * speed;
     }
 
-    void OnCollisionEnter2d(Collision2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.CompareTag("Player"))
-        {
-            //QuitarVida
-        }
+        if (col.transform.CompareTag("Bullet"))
+            eS.EnemyDied();
+        if (col.transform.CompareTag("Player") || col.transform.CompareTag("Bullet"))
+            Destroy(this.gameObject);
+    }
+
+    void OnDestroy()
+    {
+        eS.EnemyDestroyed(this.gameObject);
     }
 }

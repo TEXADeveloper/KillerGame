@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Bullet
+  - Error
+  - ErrorTitle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NoCollision
   - Water
   - UI
   - Enemy
@@ -41,4 +44,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 711214565
+    locked: 0
+  - name: Mask
+    uniqueID: 3822523579
+    locked: 0
+  - name: Canvas
+    uniqueID: 623464737
+    locked: 0
+  - name: Enemies
+    uniqueID: 3687437999
+    locked: 0
+  - name: Background2
+    uniqueID: 814375779
+    locked: 0
+  - name: Player
+    uniqueID: 1084124693
+    locked: 0
+  - name: Borders
+    uniqueID: 2565573933
     locked: 0
